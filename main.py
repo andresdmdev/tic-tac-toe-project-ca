@@ -15,10 +15,14 @@ board = Board()
 print(board.display_board())
 
 turns = range(9)
-
+is_game_finish = False
 for turn in turns:
-  board.player_turn(player1, turn)
-  board.player_turn(player2, turn)
+  is_game_finish = board.player_turn(player1, turn)
+  if is_game_finish:
+    break
+  is_game_finish = board.player_turn(player2, turn)
+  if is_game_finish:
+    break
 
-print("Final Result")
+print("\nFinal Result")
 print(board.display_board())
