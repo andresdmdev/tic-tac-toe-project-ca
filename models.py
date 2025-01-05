@@ -18,19 +18,20 @@ class Player:
 
 class Board:
   def __init__(self, squares = 9):
+    self.squares = squares
     self.board = self.calculate_squares(squares)
 
   def calculate_squares(self, squares):
     dic_board = {}
     for i in range(squares):
-      dic_board[str(i+1)] = ''
+      dic_board[str(i+1)] = ' '
     return dic_board
   
   def display_board(self):
     display_board = "\n"
     for square in self.board.keys():
       if int(square) % 3 != 0:
-        display_board += f" {self.board[square]}|"
+        display_board += f"{self.board[square]}|"
       else:
         display_board += f"{self.board[square]}"
 
@@ -40,3 +41,33 @@ class Board:
     display_board += "\n"
 
     return display_board
+  
+  def add_symbol_to_board(self, symbol, position):
+    if position not in self.board or symbol == None:
+      raise AttributeError
+    
+    if self.board[position] in ['X', 'O']:
+      return -1
+    
+    self.board[position] = symbol
+    return 0
+  
+  def player_turn(self, player: Player, turn: int):
+    print(f"Turn Nº: {turn}")
+    position = -999
+    while position not in self.board:
+      position = input(f"{player.name} select the square base on range 1-9 position. Position: ")
+    
+    try:
+      result = self.add_symbol_to_board(player.symbol, position)
+      print(result)
+      while result == -1:
+        position = -999
+        while position not in self.board:
+          position = input(f"{player.name} select the square base on range 1-9 position. Position: ")
+
+        result = self.add_symbol_to_board(player.symbol, position)
+    except Exception as e:
+      print(f"Error, try again. Error: {e}")
+
+    print(self.display_board())

@@ -13,3 +13,12 @@ print("Here is the board:")
 
 board = Board()
 print(board.display_board())
+
+turns = range(9)
+
+for turn in turns:
+  board.player_turn(player1, turn)
+  board.player_turn(player2, turn)
+
+print("Final Result")
+print(board.display_board())
